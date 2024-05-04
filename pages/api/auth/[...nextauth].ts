@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import prismadb from '@/lib/prismadb'
-import { compare } from 'bcrypt';
+
+import { compare } from "bcrypt";
 
 
 export default NextAuth({
@@ -32,7 +33,7 @@ export default NextAuth({
 
                 });
                 if(!user || !user.hashedPassword){
-                    throw new Error('Email does not exists')
+                    throw new Error('Email does not exists');
                 }
 
                 const isCorrectPassword = await compare(credentials.password, user.hashedPassword)
@@ -42,10 +43,6 @@ export default NextAuth({
 
                 return user;
 
-
-
-
-
             }
         })
     ],
@@ -54,12 +51,11 @@ export default NextAuth({
     },
     debug: process.env.NODE_ENV === 'development',
     session: {
-        strategy:'jwt'
-
+        strategy:'jwt',
     },
     jwt:{
-        secret : process.env.NEXTAUTH_JWT_SECRET
+        secret : process.env.NEXTAUTH_JWT_SECRET,
     },
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
 
 })
